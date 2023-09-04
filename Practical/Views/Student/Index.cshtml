@@ -1,0 +1,77 @@
+﻿@model IEnumerable<Practical.Models.Students>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@Html.Raw(ViewBag.AlertMsg)
+@Html.Raw(ViewBag.LoginMessage)
+<br />
+<br />
+<center><h2>Student Details</h2></center>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@using (Html.BeginForm("Index", "Student", FormMethod.Get))
+{
+    <label for="selectedDept">Select Department: </label>
+    @Html.DropDownList("DepartmentFilter", ViewBag.DeptList as List<SelectListItem>, "All Departments")
+    <input type="submit" value="Search" />
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Stud_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Phone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Dept_id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Course_id)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stud_name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dept_id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Course_id)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { Stud_ID = item.Stud_ID  /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { Stud_ID = item.Stud_ID  /* id=item.PrimaryKey */ }, new { onclick = "return confirm('Are sure wants to delete?');" })
+            </td>
+        </tr>
+    }
+
+    @if (!Model.Any())
+    {
+        <tr>
+            <td colspan="6">No students found.</td>
+        </tr>
+    }
+
+
+
+</table>
